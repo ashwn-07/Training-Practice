@@ -17,7 +17,7 @@ const TheClock = ({ currentColor, status }) => {
   useEffect(() => {
     setColor(currentColor);
   }, [status]);
-
+//r
   return (
     <div>
       <h1 style={{ color }}> helloo </h1>
