@@ -14,12 +14,13 @@ const ClockTest = () => {
   return (
     <div>
       <select id="color-select" onChange={handleChange}>
-        <option value="red">red</option>
-        <option value="green">green</option>
-        <option value="yellow">yellow</option>
+        <option value= "red">red</option>
+        <option value= "green">green</option>
+        <option value= "yellow">yellow</option>
+        <option value= "blue">Blue</option>
       </select>
 
-      <TheClock currentColor={selected} status={changed} /> {/* here the reason for using status prop is for triggering the effects on each render of the component,---> refer TheClock component*/}
+      <TheClock currentColor={selected} status={changed} /> { /* here the reason for using status prop is for triggering the effects on each render of the component,---> refer TheClock component*/}
     </div>
   );
 };
