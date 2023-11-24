@@ -17,7 +17,7 @@ const TheClock = ({ currentColor, status }) => {
   useEffect(() => {
     setColor(currentColor);
   }, [status]);
-//rrtrt chnage to test
+//rrtrt chnage to testrt5
   return (
     <div>
       <h1 style={{ color }}> helloo </h1>
