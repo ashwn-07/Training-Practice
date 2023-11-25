@@ -17,7 +17,7 @@ const ClockTest = () => {
         <option value= "red">red</option>
         <option value= "green">green</option>
         <option value= "yellow">yellow</option>
-        <option value= "blue">Blue</option>
+        <option value= "violet">Blue</option>
       </select>
 
       <TheClock currentColor={selected} status={changed} /> { /* here the reason for using status prop is for triggering the effects on each render of the component,---> refer TheClock component*/}
