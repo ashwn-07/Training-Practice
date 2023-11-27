@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 const ProfileEdit = () => {
-  const [firstName, setFirstName] = useState("jane");
-  const [lastName, setLastName] = useState("Jacobs");
+  const [name, setName] = useState({firstName:"Jane", lastName:"jacobs"});
   const [editClicked, setEditClicked] = useState(false);
 
 
@@ -15,11 +14,14 @@ const ProfileEdit = () => {
             {editClicked ? (
               <input
                 className="mx-2 p-1 rounded-lg bg-stone-300"
-                onChange={(e) => setFirstName(e.target.value)}
-                value={firstName}
+                onChange={(e) => setName({
+                  ...name,
+                  firstName:e.target.value
+                })}
+                value={name.firstName}
               />
             ) : (
-              <b>{firstName}</b>
+              <b>{name.firstName}</b>
             )}
           </label>
 
@@ -28,11 +30,15 @@ const ProfileEdit = () => {
             {editClicked ? (
               <input
                 className=" mx-2 p-1 rounded-lg bg-stone-300"
-                onChange={(e) => setLastName(e.target.value)}
-                value={lastName}
+                
+                onChange={(e) => setName({
+                  ...name,
+                  lastName:e.target.value
+                })}
+                value={name.lastName}
               />
             ) : (
-              <b>{lastName}</b>
+              <b>{name.lastName}</b>
             )}
           </label>
 
@@ -50,7 +56,7 @@ const ProfileEdit = () => {
           <p>
             <i className="text-2xl">
               {" "}
-              Hello, {firstName} {lastName}
+              Hello, {name.firstName} {name.lastName}
             </i>
           </p>
         </form>
