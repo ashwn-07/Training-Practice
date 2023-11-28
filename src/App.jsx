@@ -1,4 +1,5 @@
 import ProfileEdit from "./Components/EditProfileexc/ProfileEdit";
+import ItemsList from "./Components/FilteringList/ItemsList";
 import ViewTree from "./Components/Places/ViewTree";
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
       {/* <Objects/> */}
       {/* <ClockTest/> */}
       {/* <ProfileEdit/> */}
-      <div className="flex flex-col w-50 text-2xl items-center">
-        <ViewTree />
+      <div className="flex flex-col w-50 text-xl items-center">
+       <ItemsList/>
       </div>
     </>
   );

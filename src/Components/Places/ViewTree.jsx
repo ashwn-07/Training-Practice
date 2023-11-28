@@ -31,7 +31,7 @@ const ViewTree = () => {
   return (
     <>
       <h2>Places to visit</h2>
-      <ol>
+      <ol >
         {planets.map((place) => (
           <PlaceTree key={place.id} place={place} /> // this is like ex for earth { id:0, children:[array of countires in earth as continents which contains another children array of its countries]} which is like  **planets = [{title, id, children:[{title, id, children:[]}]}**
 

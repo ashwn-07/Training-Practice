@@ -20,7 +20,7 @@ const TheClock = ({ currentColor, status }) => {
 //rrtrt chnage to twqrwer
   return (
     <div>
-      <h1 style={{ color }}> helloo </h1>
+      <h1 style={{ color: currentColor }}> helloo </h1>
     </div>
   );
 };
