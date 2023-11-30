@@ -1,0 +1,20 @@
+{"products":[{
+        "id":"1",
+        "item":"DEll monitor",
+        "description":"22inch dell monitor",
+        "price":"2200",
+        "rating":"4.2"
+    
+    
+},{ "id":"2",
+    "item":"DEll monitor",
+    "description":"22inch dell monitor",
+    "price":"2200",
+    "rating":"4.2"
+},{
+    "id":"3",
+    "item":"DEll monitor",
+    "description":"22inch dell monitor",
+    "price":"2200",
+    "rating":"4.2" 
+}]}

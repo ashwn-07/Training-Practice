@@ -1,56 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useState } from "react";
-import AddTask from "./AddTask.js";
-import TaskList from "./TaskList.js";
 import axios from "../../api/axios.js";
+import productlist from "./products.js";
+import ProductList from "./ProductList.jsx";
+import { addProduct } from "./products.js";
 
-const Reducers = () => {
-  const [products, setProducts] = useState([]);
 
-  
-  useEffect(async () => {
-    const response = await axios.get("/").then((res) => {
-      setTasks(res);
-    });
-    setTasks();
-  }, []);
-  
-
-  function handleAddTask(text) {
-    setTasks([
-      ...products,
-      {
-        id: nextId++,
-        text: text,
-        done: false,
-      },
-    ]);
+const reducerFunction = (products, action) => {
+  switch (action.type) {
+    case "populate": {
+      return action.products;
+    }
   }
+};
 
-  function handleChangeTask(task) {
-    setTasks(
-      products.map((t) => {
-        if (t.id === task.id) {
-          return task;
-        } else {
-          return t;
+const Reducers = ({ cartproducts, dispatchProduct }) => {
+  const [products, dispatch] = useReducer(reducerFunction, []);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (loading) {
+          const response = await axios.get("/products");
+
+          dispatch({
+            type: "populate",
+            products: response.data.products,
+          });
         }
-      })
-    );
-  }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
 
-  function handleDeleteTask(taskId) {
-    setTasks(products.filter((t) => t.id !== taskId));
-  }
+    return () => {
+      setLoading((curr) => !curr);
+    };
+  }, []);
+
+  const handleAddProducts = (product) => {
+    dispatchProduct({
+      type: "Cart",
+      product: product,
+    });
+  };
+
+  useEffect(() => {
+    console.log("this is", cartproducts);
+  }, [cartproducts]);
+
+  function handleDeleteProducts(productid) {}
 
   return (
     <>
-      <h1>Prague itinerary</h1>
-      {/* {  <AddTask onAddTask={handleAddTask} />} */}
-      <TaskList
+      <ProductList
         products={products}
-        onChangeTask={handleChangeTask}
-        onDeleteTask={handleDeleteTask}
+        onAddProduct={handleAddProducts}
+        onDeleteProduct={handleDeleteProducts}
       />
     </>
   );
