@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { FaCartArrowDown } from "react-icons/fa6";
 import Stars from "./Stars";
+import { ProductContext } from "../../Context/ProductContext";
 
 const ProductCard = ({ Product }) => {
   return (
@@ -34,6 +35,7 @@ const ProductCard = ({ Product }) => {
 };
 
 const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
+  const { handleAddProducts } = useContext(ProductContext);
   return (
     <>
       <div className="porduct-details ps-4 pe-4">
@@ -44,7 +46,7 @@ const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
         <div>
           <Stars stars={Product?.rating} />
         </div>
-        <div className="flex justify-between items-center"> 
+        <div className="flex justify-between items-center">
           <div className="">
             <h1 className="pt-3 font-roboto">Price</h1>
             <p className="font-kanit text-2xl font-semibold text-slate-700">
@@ -53,8 +55,12 @@ const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
           </div>
 
           <div>
-            <button className="flex items-center text-white rounded-md bg-violet-600 px-6 py-1.5" onClick={()=>onAddProducts(Product)}>
-              Add &nbsp; <FaCartArrowDown /> </button>
+            <button
+              className="flex items-center text-white rounded-md bg-violet-600 px-6 py-1.5"
+              onClick={() => handleAddProducts(Product)}
+            >
+              Add &nbsp; <FaCartArrowDown />{" "}
+            </button>
           </div>
         </div>
       </div>
@@ -62,13 +68,12 @@ const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
   );
 };
 
-const Product = ({ Product, onAddProducts, onDeleteProducts }) => {
+const Product = ({ Product, onDeleteProducts }) => {
   return (
     <div key={Product?.id} className="h-full  shadow-sm rounded-md">
       <ProductCard Product={Product} />
       <ProductDetails
         Product={Product}
-        onAddProducts={onAddProducts}
         onDeleteProducts={onDeleteProducts}
       />
     </div>

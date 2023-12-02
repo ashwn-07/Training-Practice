@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import { useState } from "react";
 import axios from "../../api/axios.js";
-import productlist from "./products.js";
 import ProductList from "./ProductList.jsx";
-import { addProduct } from "./products.js";
+import { ProductContext } from "../../Context/ProductContext";
+
 
 
 const reducerFunction = (products, action) => {
@@ -14,7 +14,8 @@ const reducerFunction = (products, action) => {
   }
 };
 
-const Reducers = ({ cartproducts, dispatchProduct }) => {
+const Reducers = ( ) => {
+  const {dispatchProduct}  =useContext(ProductContext);
   const [products, dispatch] = useReducer(reducerFunction, []);
   const [loading, setLoading] = useState(true);
 
@@ -40,25 +41,17 @@ const Reducers = ({ cartproducts, dispatchProduct }) => {
     };
   }, []);
 
-  const handleAddProducts = (product) => {
-    dispatchProduct({
-      type: "Cart",
-      product: product,
-    });
-  };
+  
 
-  useEffect(() => {
-    console.log("this is", cartproducts);
-  }, [cartproducts]);
 
   function handleDeleteProducts(productid) {}
 
   return (
     <>
       <ProductList
-        products={products}
-        onAddProduct={handleAddProducts}
-        onDeleteProduct={handleDeleteProducts}
+        products={ products }
+        // onAddProduct={ handleAddProducts }
+        onDeleteProduct={ handleDeleteProducts }
       />
     </>
   );
