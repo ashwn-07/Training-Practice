@@ -34,7 +34,7 @@ const ProductCard = ({ Product }) => {
   );
 };
 
-const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
+const ProductDetails = ({ Product }) => {
   const { handleAddProducts } = useContext(ProductContext);
   return (
     <>
@@ -68,14 +68,11 @@ const ProductDetails = ({ Product, onAddProducts, onDeleteProducts }) => {
   );
 };
 
-const Product = ({ Product, onDeleteProducts }) => {
+const Product = ({ Product }) => {
   return (
     <div key={Product?.id} className="h-full  shadow-sm rounded-md">
       <ProductCard Product={Product} />
-      <ProductDetails
-        Product={Product}
-        onDeleteProducts={onDeleteProducts}
-      />
+      <ProductDetails Product={Product} />
     </div>
   );
 };

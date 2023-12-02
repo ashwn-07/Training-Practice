@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useState } from "react";
 import axios from "../../api/axios.js";
 import ProductList from "./ProductList.jsx";
-import { ProductContext } from "../../Context/ProductContext";
-
-
 
 const reducerFunction = (products, action) => {
   switch (action.type) {
@@ -14,8 +11,7 @@ const reducerFunction = (products, action) => {
   }
 };
 
-const Reducers = ( ) => {
-  const {dispatchProduct}  =useContext(ProductContext);
+const Reducers = () => {
   const [products, dispatch] = useReducer(reducerFunction, []);
   const [loading, setLoading] = useState(true);
 
@@ -41,18 +37,11 @@ const Reducers = ( ) => {
     };
   }, []);
 
-  
-
-
-  function handleDeleteProducts(productid) {}
+  // function handleDeleteProducts(productid) {}
 
   return (
     <>
-      <ProductList
-        products={ products }
-        // onAddProduct={ handleAddProducts }
-        onDeleteProduct={ handleDeleteProducts }
-      />
+      <ProductList products={products} />
     </>
   );
 };
