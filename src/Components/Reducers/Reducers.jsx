@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { useState } from "react";
 import axios from "../../api/axios.js";
 import ProductList from "./ProductList.jsx";
+import CartModal from "./CartModal.jsx";
 
 const reducerFunction = (products, action) => {
   switch (action.type) {
@@ -41,6 +42,7 @@ const Reducers = () => {
 
   return (
     <>
+     
       <ProductList products={products} />
     </>
   );

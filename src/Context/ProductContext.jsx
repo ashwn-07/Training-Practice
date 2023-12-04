@@ -6,7 +6,7 @@ export const ProductContext = createContext({});
 
 const ProductProvider = ({ children }) => {
   
-  const [cartproducts, dispatchProduct] = useReducer(cartProductReducer, []);
+const [cartproducts, dispatchProduct] = useReducer(cartProductReducer, []);
 
 const handleAddProducts = (product) => {
     

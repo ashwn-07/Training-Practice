@@ -5,6 +5,7 @@ import { FaCartArrowDown } from "react-icons/fa6";
 import Stars from "./Stars";
 import { ProductContext } from "../../Context/ProductContext";
 
+
 const ProductCard = ({ Product }) => {
   return (
     <div
@@ -34,8 +35,14 @@ const ProductCard = ({ Product }) => {
   );
 };
 
-const ProductDetails = ({ Product }) => {
+const ProductDetails = ({ Product, setIsOpen }) => {
+
   const { handleAddProducts } = useContext(ProductContext);
+
+  const handleOpenModal = (setIsOpen) => {
+    setIsOpen((curr) => !curr);
+  };
+
   return (
     <>
       <div className="porduct-details ps-4 pe-4">
@@ -57,7 +64,10 @@ const ProductDetails = ({ Product }) => {
           <div>
             <button
               className="flex items-center text-white rounded-md bg-violet-600 px-6 py-1.5"
-              onClick={() => handleAddProducts(Product)}
+              onClick={() => {
+                handleAddProducts(Product);
+                handleOpenModal(setIsOpen);
+              }}
             >
               Add &nbsp; <FaCartArrowDown />{" "}
             </button>
@@ -68,11 +78,11 @@ const ProductDetails = ({ Product }) => {
   );
 };
 
-const Product = ({ Product }) => {
+const Product = ({ Product, setIsOpen }) => {
   return (
     <div key={Product?.id} className="h-full  shadow-sm rounded-md">
       <ProductCard Product={Product} />
-      <ProductDetails Product={Product} />
+      <ProductDetails Product={Product} setIsOpen={setIsOpen} />
     </div>
   );
 };

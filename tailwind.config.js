@@ -1,15 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["index.html", "./src/**/*.{jsx,js}"],
+  content: ['index.html', './src/**/*.{jsx,js}'],
   theme: {
     extend: {
-      fontFamily:{
-      'poppins':['Poppins', 'sans-serif'],
-      'roboto':['Roboto'],
-      'kanit':['Kanit'],
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'],
+        'roboto': ['Roboto'],
+        'kanit': ['Kanit'],
+        'valera': ['"Valera Round"', 'sans-serif'],
+        'crete': [' "Crete Round" ', 'sans-serif']
       },
     },
   },
   plugins: [],
-}
+};
 

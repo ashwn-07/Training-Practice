@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { ProductContext } from "../../Context/ProductContext";
+import { Link } from "react-router-dom";
 
 const Header = ({}) => {
   const { cartproducts } = useContext(ProductContext);
@@ -16,7 +17,7 @@ const Header = ({}) => {
               onClick={() => console.log("clicked")}
             >
               <li className="flex items-center">
-                <FaShoppingCart />
+                <Link to={"/cart"}><FaShoppingCart /></Link>
               </li>
             </ul>
             <p className="absolute bottom-6 left-4 text-sm bg-red-600 text-slate-100 px-2 rounded-full -z-10">
