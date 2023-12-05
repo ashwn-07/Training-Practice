@@ -4,6 +4,7 @@ import { ProductContext } from "../../Context/ProductContext";
 import { Link } from "react-router-dom";
 
 const Header = ({}) => {
+  
   const { cartproducts } = useContext(ProductContext);
   
   return (

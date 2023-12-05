@@ -1,12 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { FaCartArrowDown } from "react-icons/fa6";
 import Stars from "./Stars";
 import { ProductContext } from "../../Context/ProductContext";
-
+import "animate.css";
 
 const ProductCard = ({ Product }) => {
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const handleChangeImageNext = () => {
+    if (imageIndex < Product.images.length - 1) {
+      setImageIndex((curr) => curr + 1);
+    }
+  };
+
+  const handleChangeImagePrev = () => {
+    if (imageIndex != 0) {
+      setImageIndex((curr) => curr - 1);
+    }
+  };
   return (
     <div
       className=" h-fit pb-5 pt-2 max-h-fit bg-gray-300 flex justify-center rounded-lg"
@@ -18,15 +31,15 @@ const ProductCard = ({ Product }) => {
         </h1>
 
         <div className=" flex items-center justify-center">
-          <button className="px-2">
+          <button className="px-2" onClick={handleChangeImagePrev}>
             <IoIosArrowDropleftCircle size={32} color="#15133C" />
           </button>
           <img
             className="sm:w-40 sm:h-64 w-32 h-64"
-            src={Product?.images[1]}
+            src={Product?.images[imageIndex]}
             alt={Product?.title}
           />
-          <button className="px-2">
+          <button className="px-2" onClick={handleChangeImageNext}>
             <IoIosArrowDroprightCircle size={32} color="#15133C" />
           </button>
         </div>
@@ -36,7 +49,6 @@ const ProductCard = ({ Product }) => {
 };
 
 const ProductDetails = ({ Product, setIsOpen }) => {
-
   const { handleAddProducts } = useContext(ProductContext);
 
   const handleOpenModal = (setIsOpen) => {

@@ -8,7 +8,9 @@ export default {
         'roboto': ['Roboto'],
         'kanit': ['Kanit'],
         'valera': ['"Valera Round"', 'sans-serif'],
-        'crete': [' "Crete Round" ', 'sans-serif']
+        'crete': [' "Crete Round" ', 'sans-serif'],
+        'dujrati': ['Dhurjati', 'sans-serif']
+        
       },
     },
   },
