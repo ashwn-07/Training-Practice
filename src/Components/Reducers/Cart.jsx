@@ -15,17 +15,21 @@ const Item = ({ item, setTotalQty, totalQty }) => {
     const existingItemIndex = totalQty.findIndex(
       (cartItem) => cartItem.id === item.id
     );
-
+    console.log(existingItemIndex, item.title)
     if (existingItemIndex !== -1) {
       // Item exists, update its quantity
-      const updatedTotalQty = [...totalQty];
-      updatedTotalQty[existingItemIndex] = { ...item, qty: qty };
-      setTotalQty(updatedTotalQty);
+     
+      setTotalQty((prevTotalQty) => {
+        const updatedTotalQty = [...prevTotalQty];
+        updatedTotalQty[existingItemIndex] = { ...item, qty: qty };
+        return updatedTotalQty;
+      });
     } else {
       // Item doesn't exist, add it to the cart
-      setTotalQty([...totalQty, { ...item, qty: 1 }]);
+      setTotalQty((totalQty)=>[...totalQty, { ...item, qty: 1 }]);
     }
   }, [item, qty]);
+
 
   const handleQtyChange = (action) => {
     console.log("clicked", action);
@@ -53,7 +57,7 @@ const Item = ({ item, setTotalQty, totalQty }) => {
         alt="hello"
       />
 
-      <div className="w-3/5  text-3xl px-4 py-4">
+      <div className="w-3/5  text-xl px-4 py-4">
         <h4>{item.title}</h4>
         <p className="text-sm pt-2">{item.description}</p>
 
@@ -94,13 +98,14 @@ const Cart = () => {
 
   useEffect(() => {
     let totalPrice = 0;
+    console.log(totalQty)
     totalQty.forEach((item) => {
-      console.log(item)
-      
+     console.log(item, "hiiii")      
+      if(item?.qty)
       totalPrice = totalPrice + ( item.price * item.qty );
     });
 
-    setFinalPrice(curr=> curr+totalPrice);
+    setFinalPrice(totalPrice);
   }, [totalQty]);
 
   return (
