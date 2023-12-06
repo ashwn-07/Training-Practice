@@ -26,7 +26,7 @@ const ProductCard = ({ Product }) => {
       id="card-container"
     >
       <div id="card-body" className="w-max">
-        <h1 className="text-2xl text-start font-roboto" id="card-title">
+        <h1 className="text-2xl text-start font-roboto whitespace-nowrap overflow"  id="card-title">
           {Product?.title}
         </h1>
 
@@ -92,7 +92,7 @@ const ProductDetails = ({ Product, setIsOpen }) => {
 
 const Product = ({ Product, setIsOpen }) => {
   return (
-    <div key={Product?.id} className="h-full  shadow-sm rounded-md">
+    <div key={Product?.id} className="h-full shadow-lg rounded-md">
       <ProductCard Product={Product} />
       <ProductDetails Product={Product} setIsOpen={setIsOpen} />
     </div>

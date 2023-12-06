@@ -9,7 +9,7 @@ const Header = ({}) => {
   
   return (
     <>
-      <header className="py-4 top-0 fixed w-full bg-slate-100">
+      <header className="py-4 top-0 fixed w-full bg-slate-100 z-10">
         <nav className="flex justify-between">
           <div className="font-roboto text-3xl ps-4">My App</div>
           <div className="relative">

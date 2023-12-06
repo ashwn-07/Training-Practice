@@ -1,45 +1,54 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MdOutlineDoubleArrow } from "react-icons/md";
-import 'animate.css'
+import "animate.css";
+import { ProductContext } from "../../Context/ProductContext";
+import { FaCartArrowDown } from "react-icons/fa6";
 
-const CartModal = ({ isOpen, modalRef, setIsOpen }) => {
-  let body = document.body
-  useEffect(() => {
-    if (isOpen) {
-      modalRef.current.showModal();
-    
-    }
-  }, [isOpen]);
-
-  const handleClick = () => {
-    modalRef.current.close();
-    setIsOpen(curr=>!curr);
+const CartModal = ({ modalRef }) => {
+  const { cartproducts } = useContext(ProductContext);
+  const [show, setShow] =useState("hidden");
   
-  };
+  let body = document.body;
+  useEffect(() => {
+  setShow((curr)=>curr="");
 
+setTimeout(()=>{
+setShow((curr)=> curr="hiddden")
+}, 9000)
+
+  }, [cartproducts]);
+
+  
   return (
     <>
-      <dialog
+    
+      
+      <div
+        open
         ref={modalRef}
-        className="h-24 w-72  bg-red-50 rounded-xl text-gray-900 backdrop:bg-gray-800/50 animate__bounceIn"
+        className= {`h-96 w-1/5 m-0 bg-stone-100 shadow-lg border border-gray-400
+         rounded text-gray-900 fixed right-10 top-8 z-30 animate__bounceIn  ${show}`} 
       >
-        <div className="h-full">
-          <button
-            className="float-right px-4 bg-red-500 text-white"
-            onClick={handleClick}
-          >
-            X
-          </button>
-
-          <div className="overflow-hidden h-full flex flex-col items-center justify-center">
-            <p className="text-center"> Item Added to Cart</p>
-            <button className="bg-lime-600 flex items-center justify-center px-3 text-white py-1 rounded-lg mt-2">
-              {" "}
-              Cart <MdOutlineDoubleArrow size={28} />
-            </button>
-          </div>
+        {" "}
+        <div className="overflow-auto h-5/6">
+          {cartproducts.map((item, index) => (
+            <div className=" mx-5 mt-4 py-2 border-b border-gray-400">
+              <div className="flex">
+                <img className="h-28 w-24" src={item.thumbnail} alt="" />
+                <div className="flex flex-col w-full items-end pe-5">
+                  <h1>{item.title}</h1>
+                  <p>{item.price}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </dialog>
+        <div className="w-full flex items-center justify-end pe-8">
+        <button className="text-white bg-green-600 w-24 flex items-center justify-center rounded py-1"> Go to &nbsp;<FaCartArrowDown /></button>
+        </div>
+        
+      </div>
+   
     </>
   );
 };
