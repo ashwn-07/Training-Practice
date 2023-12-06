@@ -22,7 +22,7 @@ const ProductCard = ({ Product }) => {
   };
   return (
     <div
-      className=" h-fit pb-5 pt-2 max-h-fit bg-gray-300 flex justify-center rounded-lg"
+      className="h-fit pb-5 pt-2 max-h-fit bg-gray-300 flex justify-center rounded-lg"
       id="card-container"
     >
       <div id="card-body" className="w-max">

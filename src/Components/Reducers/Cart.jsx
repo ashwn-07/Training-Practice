@@ -9,16 +9,19 @@ import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 const Item = ({ item, setTotalQty, totalQty }) => {
   const [qty, setQty] = useState(1);
   const [price, setPrice] = useState(item.price);
+  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
+    setPrice(item.price * qty);
+    if(qty==1)setDisabled(true);
     // Check if the item already exists in the cart
     const existingItemIndex = totalQty.findIndex(
       (cartItem) => cartItem.id === item.id
     );
-    console.log(existingItemIndex, item.title)
+    console.log(existingItemIndex, item.title);
     if (existingItemIndex !== -1) {
       // Item exists, update its quantity
-     
+
       setTotalQty((prevTotalQty) => {
         const updatedTotalQty = [...prevTotalQty];
         updatedTotalQty[existingItemIndex] = { ...item, qty: qty };
@@ -26,33 +29,29 @@ const Item = ({ item, setTotalQty, totalQty }) => {
       });
     } else {
       // Item doesn't exist, add it to the cart
-      setTotalQty((totalQty)=>[...totalQty, { ...item, qty: 1 }]);
+      setTotalQty((totalQty) => [...totalQty, { ...item, qty: 1 }]);
     }
   }, [item, qty]);
-
 
   const handleQtyChange = (action) => {
     console.log("clicked", action);
     if (action === "increment") {
+      if(qty>=1)setDisabled(false);
+      
       setQty((curr) => curr + 1);
     } else {
       qty > 1 && setQty((curr) => curr - 1);
+      
     }
   };
 
-  useEffect(() => {
-    console.log(qty);
-  }, [qty]);
-
-  useEffect(() => {
-    setPrice(item.price * qty);
-  }, [qty]);
 
   return (
-    <div key={item.id} className="flex  mt-8 border-b border-gray-300 border-t">
+    <div key={item.id} className="flex flex-col md:flex-row   mt-8 border-b shadow border-gray-300 border-t">
       {/* bg-red-600 */}
+      <div className="flex ">
       <img
-        className="bg-lime-600 sm:w-40 sm:h-40 w-32 h-64 rounded-lg mx-8"
+        className="bg-lime-600  sm:w-40 sm:h-40 w-32 h-44 rounded-lg mx-8"
         src={item.thumbnail}
         alt="hello"
       />
@@ -62,9 +61,9 @@ const Item = ({ item, setTotalQty, totalQty }) => {
         <p className="text-sm pt-2">{item.description}</p>
 
         <div className="w-fit flex text-base mt-3 border rounded border-pink-400">
-          <div className=" px-3 border-r border-pink-400">
+          <div className={`px-3 border-r border-pink-400 ${disabled && "text-gray-400"}`}>
             {" "}
-            <button onClick={() => handleQtyChange("decrement", item.price)}>
+            <button  onClick={() => handleQtyChange("decrement", item.price)}>
               -
             </button>
           </div>
@@ -77,14 +76,15 @@ const Item = ({ item, setTotalQty, totalQty }) => {
           </div>
         </div>
       </div>
+      </div>
 
-      <div className=" grow flex text-gray-500 text-3xl mt-3 pt-10 justify-between">
+      <div className=" grow flex  text-gray-500 text-xl  xl:text-2xl  md:mt-3 md:pt-10 justify-end pe-8">
         {/* bg-stone-900 */}
         <p>
           {/* bg-slate-400 */}
           <span className="text-3xl ">&#8377;</span>
           {item.price} <br />
-          {price}
+          Amount{price}
         </p>
       </div>
     </div>
@@ -98,11 +98,10 @@ const Cart = () => {
 
   useEffect(() => {
     let totalPrice = 0;
-    console.log(totalQty)
+    //console.log(totalQty);
     totalQty.forEach((item) => {
-     console.log(item, "hiiii")      
-      if(item?.qty)
-      totalPrice = totalPrice + ( item.price * item.qty );
+      //console.log(item, "hiiii");
+      if (item?.qty) totalPrice = totalPrice + item.price * item.qty;
     });
 
     setFinalPrice(totalPrice);
@@ -110,23 +109,24 @@ const Cart = () => {
 
   return (
     <>
-      <main className="flex flex-col  sm:flex-row">
-        <section className=" sm:w-8/12 relative ">
+      <main className="flex flex-col  lg:flex-row">
+        <section className=" sm:w-8/12 h-screen   relative ">
           {/* bg-red-900 */}
           <BgSvg />
-          <div className="absolute sm:left-64  sm:top-24 w-full">
-            <h1 className="text-6xl font-crete space-x-3 tracking-wide text-gray-500">
+          <div className="absolute sm:left-64 top-14 left-20 sm:top-24">
+            <h1 className=" text-4xl md:text-6xl  font-crete space-x-3 tracking-wide text-gray-500">
               Shopping Cart{" "}
               <span className="text-xl text-pink-600"> 3 items</span>
             </h1>
           </div>
-
+           <div className=" max-h-[calc(100vh-20%)] overflow-auto">
           {cartproducts.map((item, key) => (
             <Item item={item} setTotalQty={setTotalQty} totalQty={totalQty} />
           ))}
+          </div>
         </section>
         <section className="sm:flex-grow h-screen  text-white">
-          <div className="address-container flex justify-between px-4 mt-4 font-poppins">
+          <div className="address-container flex md:flex-col justify-between px-4 mt-4 font-poppins">
             <div className="adress-details">
               <h4 className="text-slate-900 text-2xl font-poppins">
                 Jessica Joy
@@ -141,7 +141,7 @@ const Cart = () => {
             <button className="text-pink-400 text-xl me-8">edit</button>
           </div>
 
-          <div className="text-black payment-container  flex justify-between px-4 mt-4 font-poppins">
+          <div className="text-black payment-container  flex md:flex-col justify-between px-4 mt-4 font-poppins">
             <div className="payment-details">
               <h4 className="text-slate-900 text-xl font-poppins flex items-center">
                 Payment Method{" "}
@@ -171,7 +171,7 @@ const Cart = () => {
               you can apply only one per product
             </h6>
 
-            <div className="flex items items-center space-x-2">
+            <div className="flex-col  lg:flex-row items items-center space-x-2">
               <input
                 className="border-2 rounded-md px-2 py-2 mt-3"
                 type="text"
