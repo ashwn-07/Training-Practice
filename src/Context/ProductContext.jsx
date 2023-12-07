@@ -9,7 +9,7 @@ const ProductProvider = ({ children }) => {
 const [cartproducts, dispatchProduct] = useReducer(cartProductReducer, []);
 
 const handleAddProducts = (product) => {
-    
+    console.log("button clicked", product.title)
     dispatchProduct({
       type: "Cart",
       product: product,

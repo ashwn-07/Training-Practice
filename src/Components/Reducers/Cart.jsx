@@ -171,7 +171,7 @@ const Cart = () => {
               you can apply only one per product
             </h6>
 
-            <div className="flex-col  lg:flex-row items items-center space-x-2">
+            <div className="flex-col lg:flex-row items items-center space-x-2">
               <input
                 className="border-2 rounded-md px-2 py-2 mt-3"
                 type="text"

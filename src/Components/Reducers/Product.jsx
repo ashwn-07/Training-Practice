@@ -25,10 +25,15 @@ const ProductCard = ({ Product }) => {
       className="h-fit pb-5 pt-2 max-h-fit bg-gray-300 flex justify-center rounded-lg"
       id="card-container"
     >
-      <div id="card-body" className="w-max">
-        <h1 className="text-2xl text-start font-roboto whitespace-nowrap overflow"  id="card-title">
-          {Product?.title}
-        </h1>
+      <div id="card-body" className="w-max overflow-hidden">
+        <div className="overflow-hidden px-3">
+          <h1
+            className="text-2xl text-start  font-roboto whitespace-nowrap text-ellipsis overflow-hidden"
+            id="card-title"
+          >
+            {Product?.title}
+          </h1>
+        </div>
 
         <div className=" flex items-center justify-center">
           <button className="px-2" onClick={handleChangeImagePrev}>
@@ -69,7 +74,7 @@ const ProductDetails = ({ Product, setIsOpen }) => {
           <div className="">
             <h1 className="pt-3 font-roboto">Price</h1>
             <p className="font-kanit text-2xl font-semibold text-slate-700">
-              {Product?.price}
+              &#36; {Product?.price}
             </p>
           </div>
 
@@ -92,7 +97,7 @@ const ProductDetails = ({ Product, setIsOpen }) => {
 
 const Product = ({ Product, setIsOpen }) => {
   return (
-    <div key={Product?.id} className="h-full shadow-lg rounded-md">
+    <div key={Product?.id} className="h-428 shadow-lg rounded-md">
       <ProductCard Product={Product} />
       <ProductDetails Product={Product} setIsOpen={setIsOpen} />
     </div>

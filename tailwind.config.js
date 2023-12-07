@@ -12,6 +12,10 @@ export default {
         'dujrati': ['Dhurjati', 'sans-serif']
         
       },
+      height:{
+         428: '578px',
+
+      }
     },
   },
   plugins: [],

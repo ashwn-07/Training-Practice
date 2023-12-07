@@ -5,9 +5,10 @@ import "./index.css";
 import ProductProvider from "./Context/ProductContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ProductProvider>
-      <App />
-    </ProductProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+ 
+  // </React.StrictMode>
+     <ProductProvider>
+     <App />
+   </ProductProvider>
 );
