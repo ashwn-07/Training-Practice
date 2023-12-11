@@ -6,79 +6,87 @@ import { FaRegQuestionCircle } from "react-icons/fa";
 import MasterCardSvg from "./MasterCardSvg";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
-const Item = ({ item, setTotalQty, totalQty }) => {
-  const [qty, setQty] = useState(1);
+const Item = ({ item }) => {
+  const [qty, setQty] = useState(item.qty);
   const [price, setPrice] = useState(item.price);
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
+  const { dispatchProduct, cartproducts } = useContext(ProductContext);
 
   useEffect(() => {
-    setPrice(item.price * qty);
-    if(qty==1)setDisabled(true);
+    setPrice(item?.price * item?.qty);
+    if (qty == 1) setDisabled(true);
     // Check if the item already exists in the cart
-    const existingItemIndex = totalQty.findIndex(
+    const productIndex = cartproducts.findIndex(
       (cartItem) => cartItem.id === item.id
     );
-    console.log(existingItemIndex, item.title);
-    if (existingItemIndex !== -1) {
-      // Item exists, update its quantity
 
-      setTotalQty((prevTotalQty) => {
-        const updatedTotalQty = [...prevTotalQty];
-        updatedTotalQty[existingItemIndex] = { ...item, qty: qty };
-        return updatedTotalQty;
-      });
-    } else {
-      // Item doesn't exist, add it to the cart
-      setTotalQty((totalQty) => [...totalQty, { ...item, qty: 1 }]);
-    }
+    dispatchProduct({
+      type: "productexists",
+      productData: { productIndex, product:item, currQty: qty },
+    })
+
+    // Item exists, update its quantity
+
+    // setTotalQty((prevTotalQty) => {
+    //   const updatedTotalQty = [...prevTotalQty];
+    //   updatedTotalQty[existingItemIndex] = { ...item, qty: qty };
+    //   return updatedTotalQty;
+    // });
+
   }, [item, qty]);
 
   const handleQtyChange = (action) => {
     console.log("clicked", action);
+    console.log(item);
     if (action === "increment") {
-      if(qty>=1)setDisabled(false);
-      
+      if (qty >= 1) setDisabled(false);
+
       setQty((curr) => curr + 1);
     } else {
       qty > 1 && setQty((curr) => curr - 1);
-      
     }
   };
 
-
   return (
-    <div key={item.id} className="flex flex-col md:flex-row   mt-8 border-b shadow border-gray-300 border-t">
+    <div
+      key={item.id}
+      className="flex flex-col md:flex-row   mt-8 border-b shadow border-gray-300 border-t"
+    >
       {/* bg-red-600 */}
       <div className="flex ">
-      <img
-        className="bg-lime-600  sm:w-40 sm:h-40 w-32 h-44 rounded-lg mx-8"
-        src={item.thumbnail}
-        alt="hello"
-      />
+        <img
+          className="bg-lime-600 sm:w-40 sm:h-40 w-32 h-44 rounded-lg mx-8"
+          src={item.thumbnail}
+          alt="hello"
+        />
 
-      <div className="w-3/5  text-xl px-4 py-4">
-        <h4>{item.title}</h4>
-        <p className="text-sm pt-2">{item.description}</p>
+        <div className="w-3/5 text-xl px-4 py-4">
+          <h4>{item.title}</h4>
+          <p className="text-sm pt-2">{item.description}</p>
 
-        <div className="w-fit flex text-base mt-3 border rounded border-pink-400">
-          <div className={`px-3 border-r border-pink-400 ${disabled && "text-gray-400"}`}>
-            {" "}
-            <button  onClick={() => handleQtyChange("decrement", item.price)}>
-              -
-            </button>
-          </div>
-          <div className="px-3">{qty}</div>
-          <div className=" px-3 border-l border-pink-400">
-            {" "}
-            <button onClick={() => handleQtyChange("increment", item.price)}>
-              +
-            </button>
+          <div className="w-fit flex text-base mt-3 border rounded border-pink-400">
+            <div
+              className={`px-3 border-r border-pink-400 ${
+                disabled && "text-gray-400"
+              }`}
+            >
+              {" "}
+              <button onClick={() => handleQtyChange("decrement", item.price)}>
+                -
+              </button>
+            </div>
+            <div className="px-3">{qty}</div>
+            <div className=" px-3 border-l border-pink-400">
+              {" "}
+              <button onClick={() => handleQtyChange("increment", item.price)}>
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      </div>
 
-      <div className=" grow flex  text-gray-500 text-xl  xl:text-2xl  md:mt-3 md:pt-10 justify-end pe-8">
+      <div className="grow flex text-gray-500 text-xl xl:text-2xl md:mt-3 md:pt-10 justify-end pe-8">
         {/* bg-stone-900 */}
         <p>
           {/* bg-slate-400 */}
@@ -93,19 +101,19 @@ const Item = ({ item, setTotalQty, totalQty }) => {
 
 const Cart = () => {
   const { cartproducts } = useContext(ProductContext);
-  const [totalQty, setTotalQty] = useState(cartproducts); //an array of porducts in the cart and its total qty
+ //const [totalQty, setTotalQty] = useState(cartproducts); //an array of porducts in the cart and its total qty
   const [finalPrice, setFinalPrice] = useState(0);
 
   useEffect(() => {
     let totalPrice = 0;
     //console.log(totalQty);
-    totalQty.forEach((item) => {
+    cartproducts.forEach((item) => {
       //console.log(item, "hiiii");
       if (item?.qty) totalPrice = totalPrice + item.price * item.qty;
     });
 
     setFinalPrice(totalPrice);
-  }, [totalQty]);
+  }, [cartproducts]);
 
   return (
     <>
@@ -119,10 +127,14 @@ const Cart = () => {
               <span className="text-xl text-pink-600"> 3 items</span>
             </h1>
           </div>
-           <div className=" max-h-[calc(100vh-20%)] overflow-auto">
-          {cartproducts.map((item, key) => (
-            <Item item={item} setTotalQty={setTotalQty} totalQty={totalQty} />
-          ))}
+          <div className=" max-h-[calc(100vh-20%)] overflow-auto">
+            {cartproducts.map((item, key) => (
+              <Item
+                item={item}
+                
+               
+              />
+            ))}
           </div>
         </section>
         <section className="sm:flex-grow h-screen  text-white">

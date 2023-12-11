@@ -7,6 +7,7 @@ import ProductProvider from "./Context/ProductContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./Components/Reducers/MainLayout";
 import Cart from "./Components/Reducers/Cart";
+import CarouselTest from "./Components/Reducers/CarouselTest";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout/>} />
           <Route path="/cart" element={<Cart/>} />
+          <Route path="/test" element={<CarouselTest/>}/>
         </Routes>
       </BrowserRouter>
     </>

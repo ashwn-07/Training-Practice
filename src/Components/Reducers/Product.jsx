@@ -6,6 +6,10 @@ import Stars from "./Stars";
 import { ProductContext } from "../../Context/ProductContext";
 import "animate.css";
 
+import ProductCarousel from "./ProductCarousel";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 const ProductCard = ({ Product }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -25,10 +29,10 @@ const ProductCard = ({ Product }) => {
       className="h-fit pb-5 pt-2 max-h-fit bg-gray-300 flex justify-center rounded-lg"
       id="card-container"
     >
-      <div id="card-body" className="w-max overflow-hidden">
+      <div id="card-body" className="w-max ">
         <div className="overflow-hidden px-3">
           <h1
-            className="text-2xl text-start  font-roboto whitespace-nowrap text-ellipsis overflow-hidden"
+            className="text-2xl text-start font-roboto whitespace-nowrap text-ellipsis overflow-hidden"
             id="card-title"
           >
             {Product?.title}
@@ -39,11 +43,15 @@ const ProductCard = ({ Product }) => {
           <button className="px-2" onClick={handleChangeImagePrev}>
             <IoIosArrowDropleftCircle size={32} color="#15133C" />
           </button>
-          <img
+          {/* <img
             className="sm:w-40 sm:h-64 w-32 h-64"
             src={Product?.images[imageIndex]}
             alt={Product?.title}
-          />
+          /> */}
+          <div>
+            <ProductCarousel images={Product?.images} />
+          </div>
+
           <button className="px-2" onClick={handleChangeImageNext}>
             <IoIosArrowDroprightCircle size={32} color="#15133C" />
           </button>
@@ -64,7 +72,7 @@ const ProductDetails = ({ Product, setIsOpen }) => {
     <>
       <div className="porduct-details ps-4 pe-4">
         <h1 className="font-roboto">Description</h1>
-        <p className="text-gray-700">{Product?.description}</p>
+        <p className="text-gray-700 line-clamp-2">{Product?.description}</p>
 
         <h1 className="font-roboto pt-3">Rating</h1>
         <div>

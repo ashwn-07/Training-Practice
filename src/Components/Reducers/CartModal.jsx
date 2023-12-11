@@ -65,6 +65,7 @@ const CartModal = ({ modalRef }) => {
                 <div className="flex flex-col w-full items-end pe-5">
                   <h1>{item.title}</h1>
                   <p>&#36; {item.price}</p>
+                  <p className="text-sm">QTY {item.qty}</p>
                 </div>
               </div>
             </div>
